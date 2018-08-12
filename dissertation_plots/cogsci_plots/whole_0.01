@@ -1,0 +1,29 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label=<annotation_AND &le; 0.5<br/>gini = 0.59<br/>samples = 628<br/>value = [530, 96, 25, 9, 318]<br/>class = AND>, fillcolor="#e5813952"] ;
+1 [label=<intonation &le; 1.5<br/>gini = 0.548<br/>samples = 315<br/>value = [54, 96, 25, 9, 318]<br/>class = XOR>, fillcolor="#e539c08b"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<consistency_consistent &le; 0.5<br/>gini = 0.704<br/>samples = 185<br/>value = [54, 91, 25, 8, 120]<br/>class = XOR>, fillcolor="#e539c024"] ;
+1 -> 2 ;
+3 [label=<gini = 0.39<br/>samples = 46<br/>value = [10, 5, 3, 1, 63]<br/>class = XOR>, fillcolor="#e539c0bc"] ;
+2 -> 3 ;
+4 [label=<utterance_type_interrogative &le; 0.5<br/>gini = 0.719<br/>samples = 139<br/>value = [44, 86, 22, 7, 57]<br/>class = IOR>, fillcolor="#7be5392f"] ;
+2 -> 4 ;
+5 [label=<speech_act_conditional &le; 0.5<br/>gini = 0.753<br/>samples = 101<br/>value = [43, 36, 22, 7, 50]<br/>class = XOR>, fillcolor="#e539c010"] ;
+4 -> 5 ;
+6 [label=<has_negation_yes &le; 0.5<br/>gini = 0.757<br/>samples = 86<br/>value = [43, 36, 22, 7, 25]<br/>class = AND>, fillcolor="#e5813912"] ;
+5 -> 6 ;
+7 [label=<gini = 0.723<br/>samples = 74<br/>value = [43, 35, 7, 7, 25]<br/>class = AND>, fillcolor="#e5813919"] ;
+6 -> 7 ;
+8 [label=<gini = 0.117<br/>samples = 12<br/>value = [0, 1, 15, 0, 0]<br/>class = NOR>, fillcolor="#39e5c5ee"] ;
+6 -> 8 ;
+9 [label=<gini = 0.0<br/>samples = 15<br/>value = [0, 0, 0, 0, 25]<br/>class = XOR>, fillcolor="#e539c0ff"] ;
+5 -> 9 ;
+10 [label=<gini = 0.242<br/>samples = 38<br/>value = [1, 50, 0, 0, 7]<br/>class = IOR>, fillcolor="#7be539d7"] ;
+4 -> 10 ;
+11 [label=<gini = 0.057<br/>samples = 130<br/>value = [0, 5, 0, 1, 198]<br/>class = XOR>, fillcolor="#e539c0f7"] ;
+1 -> 11 ;
+12 [label=<gini = 0.0<br/>samples = 313<br/>value = [476, 0, 0, 0, 0]<br/>class = AND>, fillcolor="#e58139ff"] ;
+0 -> 12 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+}
