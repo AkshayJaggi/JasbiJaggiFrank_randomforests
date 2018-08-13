@@ -1,0 +1,29 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label=<intonation &le; 1.5<br/>gini = 0.466<br/>samples = 286<br/>value = [45, 92, 311]<br/>class = XOR>, fillcolor="#8139e59d"] ;
+1 [label=<speech_act_preference &le; 0.5<br/>gini = 0.616<br/>samples = 166<br/>value = [45, 89, 129]<br/>class = XOR>, fillcolor="#8139e53b"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<speech_act_defex &le; 0.5<br/>gini = 0.584<br/>samples = 133<br/>value = [45, 47, 121]<br/>class = XOR>, fillcolor="#8139e572"] ;
+1 -> 2 ;
+3 [label=<speech_act_options &le; 0.5<br/>gini = 0.544<br/>samples = 124<br/>value = [29, 47, 121]<br/>class = XOR>, fillcolor="#8139e57e"] ;
+2 -> 3 ;
+4 [label=<speech_act_conditional &le; 0.5<br/>gini = 0.408<br/>samples = 88<br/>value = [4, 36, 108]<br/>class = XOR>, fillcolor="#8139e5a4"] ;
+3 -> 4 ;
+5 [label=<consistency_consistent &le; 0.5<br/>gini = 0.487<br/>samples = 67<br/>value = [4, 36, 70]<br/>class = XOR>, fillcolor="#8139e575"] ;
+4 -> 5 ;
+6 [label=<gini = 0.174<br/>samples = 32<br/>value = [1, 4, 48]<br/>class = XOR>, fillcolor="#8139e5e5"] ;
+5 -> 6 ;
+7 [label=<gini = 0.533<br/>samples = 35<br/>value = [3, 32, 22]<br/>class = IOR>, fillcolor="#39e58149"] ;
+5 -> 7 ;
+8 [label=<gini = 0.0<br/>samples = 21<br/>value = [0, 0, 38]<br/>class = XOR>, fillcolor="#8139e5ff"] ;
+4 -> 8 ;
+9 [label=<gini = 0.619<br/>samples = 36<br/>value = [25, 11, 13]<br/>class = AND>, fillcolor="#e5813955"] ;
+3 -> 9 ;
+10 [label=<gini = 0.0<br/>samples = 9<br/>value = [16, 0, 0]<br/>class = AND>, fillcolor="#e58139ff"] ;
+2 -> 10 ;
+11 [label=<gini = 0.269<br/>samples = 33<br/>value = [0, 42, 8]<br/>class = IOR>, fillcolor="#39e581ce"] ;
+1 -> 11 ;
+12 [label=<gini = 0.032<br/>samples = 120<br/>value = [0, 3, 182]<br/>class = XOR>, fillcolor="#8139e5fb"] ;
+0 -> 12 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+}

@@ -1,0 +1,17 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label=<intonation &le; 1.5<br/>gini = 0.509<br/>samples = 271<br/>value = [47, 111, 290]<br/>class = XOR>, fillcolor="#8139e587"] ;
+1 [label=<consistency_consistent &le; 0.5<br/>gini = 0.632<br/>samples = 156<br/>value = [47, 105, 106]<br/>class = XOR>, fillcolor="#8139e502"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label=<gini = 0.225<br/>samples = 40<br/>value = [8, 0, 54]<br/>class = XOR>, fillcolor="#8139e5d9"] ;
+1 -> 2 ;
+3 [label=<intonation &le; 0.5<br/>gini = 0.603<br/>samples = 116<br/>value = [39, 105, 52]<br/>class = IOR>, fillcolor="#39e5815e"] ;
+1 -> 3 ;
+4 [label=<gini = 0.666<br/>samples = 69<br/>value = [38, 38, 42]<br/>class = XOR>, fillcolor="#8139e50d"] ;
+3 -> 4 ;
+5 [label=<gini = 0.246<br/>samples = 47<br/>value = [1, 67, 10]<br/>class = IOR>, fillcolor="#39e581d6"] ;
+3 -> 5 ;
+6 [label=<gini = 0.061<br/>samples = 115<br/>value = [0, 6, 184]<br/>class = XOR>, fillcolor="#8139e5f7"] ;
+0 -> 6 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+}
