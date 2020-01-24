@@ -86,12 +86,38 @@ def important_features(features,input_tree):
             nonzero.append(row)
     return nonzero 
 
-# Calculate Learning Curve over first 10% of data
-def rfc_learning_curve(features, labels,training_sizes,gini,score='accuracy',perc=False,return_raw=False):
+# 
+def make_binary_labels(labels, flip):
+    lb = preprocessing.LabelBinarizer()
+    lb.fit(labels)
+    blabels = lb.transform(labels)
+    if flip:
+        i = 0
+        for label in blabels:
+            blabels[i] = not label
+            i += 1
+    return blabels
+
+# random forest classifier learning curve
+# Takes: array of the features, array of the labels (EX vs IN),
+#        training sizes of the experiments, gini threshold,
+#        how to score the model, how to collect error bands, what is considered positive, 
+#        whether or not to return the raw or summarized test scores
+# Does:  Set Random Seed
+#        Binarize the Labels
+#        Flip this binarization if we want to look at the "other direction"
+#        Define the random forest classifer 
+#        Define the data splitting for training/testing
+#        Run the learning curve (train model on increasingly large subsets of the data)
+#        Report Results
+# Gives: The training sizes, the model performances
+def rfc_learning_curve(features,labels,
+                       training_sizes,
+                       gini,
+                       score='accuracy',perc=False,return_raw=False):
     st = 10
     clf = rfc(n_estimators=20,max_depth=8,max_features=None,min_impurity_decrease=gini,random_state=st)
     ss = StratifiedShuffleSplit(n_splits=10,test_size=0.2,random_state=st)
-    #f1 = f1_score(
     train_sizes, train_scores, test_scores = learning_curve(
         clf, features, labels, cv=ss, train_sizes=training_sizes,shuffle=True,scoring=score,random_state=st)
     test_scores_mean = np.mean(test_scores,axis=1)
@@ -101,20 +127,31 @@ def rfc_learning_curve(features, labels,training_sizes,gini,score='accuracy',per
     else:
         return train_sizes,test_scores_mean, test_scores_var
 
-def rfc_learning_curve_bin(features,labels,training_size,gini,score='accuracy',perc=False,flip=False,return_raw=False):
-    st = 10
-    lb = preprocessing.LabelBinarizer()
-    lb.fit(labels)
-    blabels = lb.transform(labels)
-    if flip:
-        i = 0
-        for label in blabels:
-            blabels[i] = not label
-            i += 1
+# binary random forest classifier learning curve
+# Takes: array of the features, array of the labels (EX vs IN),
+#        training sizes of the experiments, gini threshold,
+#        how to score the model, how to collect error bands, what is considered positive, 
+#        whether or not to return the raw or summarized test scores
+# Does:  Set Random Seed
+#        Binarize the Labels
+#        Flip this binarization if we want to look at the "other direction"
+#        Define the random forest classifer 
+#        Define the data splitting for training/testing
+#        Run the learning curve (train model on increasingly large subsets of the data)
+#        Report Results
+# Gives: The training sizes, the model performances
+def rfc_learning_curve_bin(features,labels,
+                           training_size,
+                           gini,
+                           score='accuracy', perc=False,flip=False,return_raw=False):
+    
+    random_seed = 10
+    blabels = make_binary_labels(labels, flip)
     clf = rfc(n_estimators=20,max_depth=8,max_features=None,min_impurity_decrease=gini,random_state=st)
     ss = StratifiedShuffleSplit(n_splits=10,test_size=0.2,random_state=st)
-    train_sizes, train_scores, test_scores = learning_curve(
-        clf, features, blabels.flatten(), cv=ss, train_sizes=training_size,shuffle=True,scoring=score,random_state=st)
+    train_sizes, train_scores, test_scores = 
+    learning_curve(clf, features, blabels.flatten(), cv=ss,
+                   train_sizes=training_size,shuffle=True,scoring=score,random_state=st)
     test_scores_mean = np.mean(test_scores,axis=1)
     test_scores_var  = np.percentile(test_scores,95,axis=1) if perc else np.std(test_scores,axis=1)
     if return_raw:
