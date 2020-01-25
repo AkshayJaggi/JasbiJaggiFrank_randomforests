@@ -1,3 +1,4 @@
+# All Imports
 from sklearn.ensemble import RandomForestClassifier as rfc
 from sklearn.model_selection import train_test_split, cross_val_score, learning_curve,GridSearchCV, StratifiedShuffleSplit
 from sklearn.metrics import roc_curve, auc, f1_score
@@ -14,15 +15,22 @@ rcParams['font.family'] = 'sans-serif'
 rcParams['font.sans-serif'] = ['Arial']
 from scipy import stats
 
-# Helper Function
+# Get Max Estimator
+# Takes: The list of features, the list of labels, the max allowable depth, the minimum gini decrease
+# Does:  High level: finds the best example tree in a forest
+#        Splits the data into training and test splits
+#        For each split, train a random forest on this split
+#        For all the trees in the forest, select the tree with the best performance on the test data
+#        Finally, train a final random forest on all the data and report its performance
+# Gives: The performance of the forest, the best tree
 def get_max_estimator(features,labels,depth,mind):
     st = 10
-    #cv = StratifiedKFold(n_splits=10)
     ss = StratifiedShuffleSplit(n_splits=10,test_size=0.2,random_state=st)
     clf = rfc(n_estimators=10,max_depth=depth,max_features=None,min_impurity_decrease=mind,random_state=st)
     max_tree = 0
     for train, test in cv.split(features,labels):
-        x_train, x_test, y_train, y_test = features.iloc[train], features.iloc[test],labels.iloc[train],labels.iloc[test]
+        x_train, x_test, y_train, y_test = 
+        features.iloc[train], features.iloc[test],labels.iloc[train],labels.iloc[test]
         clf.fit(x_train,y_train)
         for estimator in clf.estimators_:
             if max_tree is 0 or estimator.score(x_test,y_test) > max_tree.score(x_test,y_test):
@@ -30,6 +38,10 @@ def get_max_estimator(features,labels,depth,mind):
     scores = cross_val_score(clf, features, labels, cv=ss)
     return scores, max_tree
 
+# Plot Max Estimator
+# Takes: An example tree, the list of features, the feature classes, the plot name
+# Does:  Plots the best tree as a figure, saves as a file
+# Gives: Nothing
 def plot_max_estimator(max_tree,features,classes, name):
     dot_data = tree.export_graphviz(max_tree, out_file=None,
                                         feature_names=list(features),
@@ -40,7 +52,10 @@ def plot_max_estimator(max_tree,features,classes, name):
     graph.render('dissertation_plots/'+name)
     graph
     
-
+# Tradeoff
+# Takes: The list of features and labels, the max depth, min impurity decrease list
+# Does:  High level: tests the effect of changing the min impurity decrease
+# Gives: List of all performance scores and all best trees with many different ginis
 def tradeoff(features, labels,depth,minds):
     all_scores = []
     all_trees  = []
@@ -50,6 +65,11 @@ def tradeoff(features, labels,depth,minds):
         all_trees.append(mt)
     return all_scores, all_trees
 
+
+# Tradeoff
+# Takes: all the gini decrease values, counts, the mean performance, the std of the performance
+# Does:  Plotting the tradeoff between the gini decrease and model performance
+# Gives: a plot!
 def plot_tradeoff(minds,counts,means,stds):
     fig, axs = plt.subplots(2,2)
     axs[0,0].plot(minds, counts, 'b-')
@@ -78,7 +98,11 @@ def plot_tradeoff(minds,counts,means,stds):
     ax2.tick_params('y', colors='r')
     plt.tight_layout()
     plt.show()
-
+    
+# Important Features
+# Takes: all features and an example tree
+# Does:  Collecting all nonzero importance features
+# Gives: a list of nonzero importance features
 def important_features(features,input_tree):
     nonzero = []
     for row in zip(features,input_tree.feature_importances_):
@@ -86,7 +110,7 @@ def important_features(features,input_tree):
             nonzero.append(row)
     return nonzero 
 
-# 
+# Make the labels binary and flip them if necessary
 def make_binary_labels(labels, flip):
     lb = preprocessing.LabelBinarizer()
     lb.fit(labels)
